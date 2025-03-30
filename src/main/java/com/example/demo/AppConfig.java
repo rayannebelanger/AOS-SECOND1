@@ -1,13 +1,21 @@
 package com.example.demo;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Configuration
+import java.util.Map;
+
+@RestController
+@RequestMapping("/config")
 public class AppConfig {
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
+
+    @Value("${backend.url}")
+    private String backendUrl;
+
+    @GetMapping
+    public Map<String, String> getConfig() {
+        return Map.of("backendUrl", backendUrl);
     }
 }
